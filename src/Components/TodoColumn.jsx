@@ -1,8 +1,9 @@
 import CardThreeDot from "./commonComponent/CardThreeDot";
 import ColumnToolbar from "./commonComponent/ColumnToolbar";
 
-const TodoColumn = ({ allData, setAlldata }) => {
+const TodoColumn = ({ allData, setAlldata, categoryColors }) => {
   const data = allData.filter((item) => item.status === "todo");
+
   return (
     <>
       <div class="flex-1 flex flex-col min-w-0 w-full">
@@ -39,7 +40,12 @@ const TodoColumn = ({ allData, setAlldata }) => {
               </div>
               <p class="text-xs text-gray-600 mb-4">{items.description}</p>
               <div class="flex items-center gap-2 mb-3">
-                <span class="inline-block px-2.5 py-1 bg-blue-50 text-blue-700 text-xs font-medium rounded">
+                <span
+                  className={`inline-block px-2.5 py-1 text-xs font-medium rounded ${
+                    categoryColors[items.category] ||
+                    "bg-gray-100 text-gray-600"
+                  }`}
+                >
                   {items.category}
                 </span>
               </div>

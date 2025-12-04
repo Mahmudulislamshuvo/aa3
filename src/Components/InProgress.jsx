@@ -1,7 +1,7 @@
 import CardThreeDot from "./commonComponent/CardThreeDot";
 import ColumnToolbar from "./commonComponent/ColumnToolbar";
 
-const InProgress = ({ allData, setAlldata }) => {
+const InProgress = ({ allData, setAlldata, categoryColors }) => {
   const data = allData.filter((item) => item.status === "in-progress");
   return (
     <>
@@ -38,7 +38,12 @@ const InProgress = ({ allData, setAlldata }) => {
               </div>
               <p class="text-xs text-gray-600 mb-4">{items.description}</p>
               <div class="flex items-center gap-2 mb-3">
-                <span class="inline-block px-2.5 py-1 bg-purple-50 text-purple-700 text-xs font-medium rounded">
+                <span
+                  className={`inline-block px-2.5 py-1 text-xs font-medium rounded ${
+                    categoryColors[items.category] ||
+                    "bg-gray-100 text-gray-600"
+                  }`}
+                >
                   {items.category}
                 </span>
               </div>
