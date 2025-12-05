@@ -1,12 +1,13 @@
 import { useContext, useState } from "react";
-import CardThreeDot from "./commonComponent/FilterOptions";
 import ColumnToolbar from "./commonComponent/ColumnToolbar";
 import { DataContext } from "../Context";
 import { getFilteredData } from "../utils/displayData";
 import { getSortedData } from "../utils/sortedData";
+import ThreeDot from "./commonComponent/ThreeDot";
 
 const TodoColumn = ({ categoryColors }) => {
   const [showFilterMenu, setShowFilterMenu] = useState(false);
+  const [selectedCardId, setSelectedCardId] = useState(null);
   const [selectedFilter, setSelectedFilter] = useState(null);
   const [sortOrder, setSortOrder] = useState(null);
 
@@ -26,6 +27,10 @@ const TodoColumn = ({ categoryColors }) => {
   };
 
   const finalSortedData = getSortedData(displayData, sortOrder);
+
+  const handleModify = () => {
+    setSelectedCardId(null);
+  };
 
   return (
     <>
@@ -56,6 +61,7 @@ const TodoColumn = ({ categoryColors }) => {
                 data-card-menu-container
               >
                 <button
+                  onClick={() => setSelectedCardId(items.id)}
                   type="button"
                   className="p-1 rounded-full hover:bg-gray-100 hover:text-gray-700 focus:outline-none"
                   data-card-menu-toggle="wireframes-menu"
@@ -69,7 +75,9 @@ const TodoColumn = ({ categoryColors }) => {
                     <path d="M8 3a1.25 1.25 0 110-2.5A1.25 1.25 0 018 3zm0 6.25a1.25 1.25 0 110-2.5 1.25 1.25 0 010 2.5zm0 6.25a1.25 1.25 0 110-2.5 1.25 1.25 0 010 2.5z" />
                   </svg>
                 </button>
-                {/* <CardThreeDot /> */}
+                {selectedCardId === items.id && (
+                  <ThreeDot onHandleModify={handleModify} />
+                )}
               </div>
               <div className="mb-3">
                 <h3 className="font-semibold text-gray-900 text-sm">
