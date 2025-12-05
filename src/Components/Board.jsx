@@ -1,9 +1,6 @@
-import { useContext } from "react";
 import DoneColumn from "./DoneColumn";
 import InProgress from "./InProgress";
 import TodoColumn from "./TodoColumn";
-
-import { DataContext } from "../Context";
 
 const Board = () => {
   const categoryColors = {
@@ -18,8 +15,6 @@ const Board = () => {
     Documentation: "bg-orange-50 text-orange-700",
   };
 
-  const { allData, setAlldata } = useContext(DataContext);
-
   return (
     <div>
       <div className="flex-1 p-4 sm:p-6 lg:p-8 min-h-0">
@@ -31,11 +26,7 @@ const Board = () => {
           <InProgress categoryColors={categoryColors} />
 
           {/* <!-- Done Column --> */}
-          <DoneColumn
-            allData={allData}
-            setAlldata={setAlldata}
-            categoryColors={categoryColors}
-          />
+          <DoneColumn categoryColors={categoryColors} />
         </div>
       </div>
     </div>
