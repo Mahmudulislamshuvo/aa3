@@ -1,11 +1,11 @@
-import { useState } from "react";
+import { useContext } from "react";
 import DoneColumn from "./DoneColumn";
 import InProgress from "./InProgress";
 import TodoColumn from "./TodoColumn";
-import { data } from "../data/data";
+
+import { DataContext } from "../Context";
 
 const Board = () => {
-  const [allData, setAlldata] = useState(data);
   const categoryColors = {
     Design: "bg-blue-50 text-blue-700",
     Operations: "bg-green-50 text-green-700",
@@ -18,23 +18,17 @@ const Board = () => {
     Documentation: "bg-orange-50 text-orange-700",
   };
 
+  const { allData, setAlldata } = useContext(DataContext);
+
   return (
     <div>
-      <div class="flex-1 p-4 sm:p-6 lg:p-8 min-h-0">
-        <div class="flex flex-col gap-6 xl:flex-row h-full">
+      <div className="flex-1 p-4 sm:p-6 lg:p-8 min-h-0">
+        <div className="flex flex-col gap-6 xl:flex-row h-full">
           {/* <!-- Todo Column --> */}
-          <TodoColumn
-            allData={allData}
-            setAlldata={setAlldata}
-            categoryColors={categoryColors}
-          />
+          <TodoColumn categoryColors={categoryColors} />
 
           {/* <!-- In Progress Column --> */}
-          <InProgress
-            allData={allData}
-            setAlldata={setAlldata}
-            categoryColors={categoryColors}
-          />
+          <InProgress categoryColors={categoryColors} />
 
           {/* <!-- Done Column --> */}
           <DoneColumn
