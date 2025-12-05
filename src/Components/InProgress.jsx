@@ -9,7 +9,7 @@ const InProgress = ({ categoryColors }) => {
   return (
     <>
       <div className="flex-1 flex flex-col min-w-0 w-full">
-        <ColumnToolbar todoData={data} />
+        <ColumnToolbar title={"In Progress"} todoData={data} />
         <div className="space-y-4 flex-1 overflow-visible lg:overflow-y-auto">
           {/* <!-- Card 1 --> */}
           {data?.map((items) => (

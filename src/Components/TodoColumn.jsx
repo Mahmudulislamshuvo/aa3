@@ -2,10 +2,13 @@ import { useContext, useState } from "react";
 import CardThreeDot from "./commonComponent/FilterOptions";
 import ColumnToolbar from "./commonComponent/ColumnToolbar";
 import { DataContext } from "../Context";
+import { getFilteredData } from "../utils/displayData";
+import { getSortedData } from "../utils/sortedData";
 
 const TodoColumn = ({ categoryColors }) => {
   const [showFilterMenu, setShowFilterMenu] = useState(false);
   const [selectedFilter, setSelectedFilter] = useState(null);
+  const [sortOrder, setSortOrder] = useState(null);
 
   //got data from context
   const { allData } = useContext(DataContext);
@@ -14,31 +17,34 @@ const TodoColumn = ({ categoryColors }) => {
   // mapping unique category to show
 
   // filtered data show or show whole data
-  const displayData = selectedFilter
-    ? data.filter((item) => item.category === selectedFilter)
-    : data;
+  const displayData = getFilteredData(data, selectedFilter);
+
   // handle filter menu
   const handleFilterMenu = (e) => {
     e.stopPropagation();
     setShowFilterMenu(!showFilterMenu);
   };
 
-  console.log(showFilterMenu);
+  const finalSortedData = getSortedData(displayData, sortOrder);
 
   return (
     <>
       <div className="flex-1 flex flex-col min-w-0 w-full">
         <ColumnToolbar
+          title={"To-do"}
           todoData={data}
           handleFilterMenu={handleFilterMenu}
           showFilterMenu={showFilterMenu}
           setShowFilterMenu={setShowFilterMenu}
           setSelectedFilter={setSelectedFilter}
+          setSortOrder={setSortOrder}
+          sortOrder={sortOrder}
+          displayData={displayData}
         />
 
         <div className="space-y-4 flex-1 overflow-visible lg:overflow-y-auto">
           {/* <!-- Card 1 --> */}
-          {displayData?.map((items) => (
+          {finalSortedData?.map((items) => (
             <div
               key={items.id}
               className="bg-white rounded-lg border border-gray-200 p-4 hover:shadow-md transition-shadow relative"

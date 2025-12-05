@@ -1,11 +1,12 @@
 import { getUniqueCategories } from "../../utils/getUniqueCategory";
 
-const FilterOptions = ({ setSelectedFilter, closeMenu, data }) => {
+const FilterOptions = ({ setSelectedFilter, closeMenu, data, displayData }) => {
   const uniqueCategory = getUniqueCategories(data);
   const handleSelect = (category) => {
     setSelectedFilter(category);
     closeMenu();
   };
+
   return (
     <>
       <div
@@ -27,7 +28,7 @@ const FilterOptions = ({ setSelectedFilter, closeMenu, data }) => {
             key={category}
             onClick={() => handleSelect(category)}
             type="button"
-            className="w-full text-left px-4 py-2 hover:bg-gray-50"
+            className={`w-full text-left px-4 py-2 hover:bg-gray-50 ${displayData[0]?.category}`}
           >
             {category}
           </button>
