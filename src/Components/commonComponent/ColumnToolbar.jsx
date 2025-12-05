@@ -1,6 +1,12 @@
-import CardThreeDot from "./CardThreeDot";
+import FilterOptions from "./FilterOptions";
 
-const ColumnToolbar = ({ todoData }) => {
+const ColumnToolbar = ({
+  todoData,
+  handleFilterMenu,
+  showFilterMenu,
+  setShowFilterMenu,
+  setSelectedFilter,
+}) => {
   return (
     <>
       <div className="flex items-center gap-3 mb-6">
@@ -13,6 +19,7 @@ const ColumnToolbar = ({ todoData }) => {
         <div className="ml-auto flex items-center gap-2">
           <div className="relative">
             <button
+              onClick={(e) => handleFilterMenu(e)}
               type="button"
               className="flex items-center gap-2 px-3 py-1.5 text-sm text-gray-600 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 focus:outline-none"
               data-menu-toggle="inprogress-filter-menu"
@@ -32,7 +39,13 @@ const ColumnToolbar = ({ todoData }) => {
               </svg>
               Filter
             </button>
-            <CardThreeDot />
+            {showFilterMenu && (
+              <FilterOptions
+                data={todoData}
+                setSelectedFilter={setSelectedFilter}
+                closeMenu={() => setShowFilterMenu(false)}
+              />
+            )}
           </div>
           <div className="relative">
             <button

@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import CardThreeDot from "./commonComponent/CardThreeDot";
+import CardThreeDot from "./commonComponent/FilterOptions";
 import ColumnToolbar from "./commonComponent/ColumnToolbar";
 import { DataContext } from "../Context";
 
@@ -37,7 +37,7 @@ const DoneColumn = ({ categoryColors }) => {
                     <path d="M8 3a1.25 1.25 0 110-2.5A1.25 1.25 0 018 3zm0 6.25a1.25 1.25 0 110-2.5 1.25 1.25 0 010 2.5zm0 6.25a1.25 1.25 0 110-2.5 1.25 1.25 0 010 2.5z" />
                   </svg>
                 </button>
-                <CardThreeDot />
+                {/* <CardThreeDot /> */}
               </div>
               <div className="mb-3">
                 <h3 className="font-semibold text-gray-900 text-sm">

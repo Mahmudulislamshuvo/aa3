@@ -1,20 +1,44 @@
-import { useContext } from "react";
-import CardThreeDot from "./commonComponent/CardThreeDot";
+import { useContext, useState } from "react";
+import CardThreeDot from "./commonComponent/FilterOptions";
 import ColumnToolbar from "./commonComponent/ColumnToolbar";
 import { DataContext } from "../Context";
 
 const TodoColumn = ({ categoryColors }) => {
+  const [showFilterMenu, setShowFilterMenu] = useState(false);
+  const [selectedFilter, setSelectedFilter] = useState(null);
+
+  //got data from context
   const { allData } = useContext(DataContext);
+  // filtered todo data only
   const data = allData.filter((item) => item.status === "todo");
+  // mapping unique category to show
+
+  // filtered data show or show whole data
+  const displayData = selectedFilter
+    ? data.filter((item) => item.category === selectedFilter)
+    : data;
+  // handle filter menu
+  const handleFilterMenu = (e) => {
+    e.stopPropagation();
+    setShowFilterMenu(!showFilterMenu);
+  };
+
+  console.log(showFilterMenu);
 
   return (
     <>
       <div className="flex-1 flex flex-col min-w-0 w-full">
-        <ColumnToolbar todoData={data} />
+        <ColumnToolbar
+          todoData={data}
+          handleFilterMenu={handleFilterMenu}
+          showFilterMenu={showFilterMenu}
+          setShowFilterMenu={setShowFilterMenu}
+          setSelectedFilter={setSelectedFilter}
+        />
 
         <div className="space-y-4 flex-1 overflow-visible lg:overflow-y-auto">
           {/* <!-- Card 1 --> */}
-          {data?.map((items) => (
+          {displayData?.map((items) => (
             <div
               key={items.id}
               className="bg-white rounded-lg border border-gray-200 p-4 hover:shadow-md transition-shadow relative"
@@ -39,7 +63,7 @@ const TodoColumn = ({ categoryColors }) => {
                     <path d="M8 3a1.25 1.25 0 110-2.5A1.25 1.25 0 018 3zm0 6.25a1.25 1.25 0 110-2.5 1.25 1.25 0 010 2.5zm0 6.25a1.25 1.25 0 110-2.5 1.25 1.25 0 010 2.5z" />
                   </svg>
                 </button>
-                <CardThreeDot />
+                {/* <CardThreeDot /> */}
               </div>
               <div className="mb-3">
                 <h3 className="font-semibold text-gray-900 text-sm">
