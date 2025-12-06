@@ -1,17 +1,18 @@
 import { useContext, useState } from "react";
-import CardThreeDot from "./commonComponent/FilterOptions";
 import ColumnToolbar from "./commonComponent/ColumnToolbar";
 import { DataContext } from "../Context";
 import { getFilteredData } from "../utils/displayData";
 import { getSortedData } from "../utils/sortedData";
+import ThreeDot from "./commonComponent/ThreeDot";
 
-const DoneColumn = ({ categoryColors }) => {
+const DoneColumn = ({ categoryColors, handleEdit }) => {
   const [showFilterMenu, setShowFilterMenu] = useState(false);
+  const [openMenuId, setOpenMenuId] = useState(null);
   const [selectedFilter, setSelectedFilter] = useState(null);
   const [sortOrder, setSortOrder] = useState(null);
 
   //got data from context
-  const { allData } = useContext(DataContext);
+  const { allData, setAlldata } = useContext(DataContext);
   // filtered todo data only
   const data = allData.filter((item) => item.status === "done");
   // mapping unique category to show
@@ -26,6 +27,28 @@ const DoneColumn = ({ categoryColors }) => {
   };
 
   const finalSortedData = getSortedData(displayData, sortOrder);
+
+  // Handle Toggle Modify Component
+  const handleMenuToggle = (e, id) => {
+    e.stopPropagation();
+    setOpenMenuId((prev) => (prev === id ? null : id));
+  };
+
+  // status change (Move to)
+  const handleMoveStatus = (id, newStatus) => {
+    setAlldata((prev) =>
+      prev.map((item) =>
+        item.id === id ? { ...item, status: newStatus } : item
+      )
+    );
+    setOpenMenuId(null);
+  };
+
+  // delete card
+  const handleDelete = (id) => {
+    setAlldata((prev) => prev.filter((item) => item.id !== id));
+    setOpenMenuId(null);
+  };
 
   return (
     <>
@@ -55,6 +78,7 @@ const DoneColumn = ({ categoryColors }) => {
                 data-card-menu-container
               >
                 <button
+                  onClick={(e) => handleMenuToggle(e, items.id)}
                   type="button"
                   className="p-1 rounded-full hover:bg-gray-100 hover:text-gray-700 focus:outline-none"
                   data-card-menu-toggle="software-installation-menu"
@@ -68,7 +92,18 @@ const DoneColumn = ({ categoryColors }) => {
                     <path d="M8 3a1.25 1.25 0 110-2.5A1.25 1.25 0 018 3zm0 6.25a1.25 1.25 0 110-2.5 1.25 1.25 0 010 2.5zm0 6.25a1.25 1.25 0 110-2.5 1.25 1.25 0 010 2.5z" />
                   </svg>
                 </button>
-                {/* <CardThreeDot /> */}
+                {openMenuId === items.id && (
+                  <ThreeDot
+                    item={items}
+                    onMoveToTodo={() => handleMoveStatus(items.id, "todo")}
+                    onMoveToInProgress={() =>
+                      handleMoveStatus(items.id, "in-progress")
+                    }
+                    onDelete={() => handleDelete(items.id)}
+                    onClose={() => setOpenMenuId(null)}
+                    handleEdit={handleEdit}
+                  />
+                )}
               </div>
               <div className="mb-3">
                 <h3 className="font-semibold text-gray-900 text-sm">

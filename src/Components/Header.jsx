@@ -1,45 +1,6 @@
-import { useContext, useState } from "react";
-import ModalComponent from "./commonComponent/ModalComponent";
-import { DataContext } from "../Context";
+import { useContext } from "react";
 
-const Header = () => {
-  const [open, setOpen] = useState(false);
-  const { allData, setAlldata } = useContext(DataContext);
-  const [formData, setFormData] = useState({
-    id: null,
-    title: "",
-    description: "",
-    category: "design",
-    date: "",
-    status: "todo",
-  });
-
-  // const handleAddClick = () => {
-  //   setFormData({
-  //     id: null,
-  //     title: "",
-  //     description: "",
-  //     tag: "design",
-  //     date: "",
-  //     status: "todo",
-  //   }); // প্রতিবার fresh form
-  //   setOpen(true);
-  // };
-
-  const handleAddSubmit = (newTask) => {
-    setAlldata((prev) => [...prev, { ...newTask, id: crypto.randomUUID() }]);
-    setFormData({
-      id: null,
-      title: "",
-      description: "",
-      tag: "design",
-      date: "",
-      status: "todo",
-    });
-  };
-
-  console.log(allData);
-
+const Header = ({ handleAdd }) => {
   return (
     <div>
       <div className="bg-white border-b border-gray-200 px-4 py-4 sm:px-6 sm:py-6 lg:px-8">
@@ -73,7 +34,7 @@ const Header = () => {
               />
             </div>
             <button
-              onClick={() => setOpen(true)}
+              onClick={handleAdd}
               className="px-4 py-2 bg-gray-900 text-white rounded-lg font-medium hover:bg-gray-800 transition-colors"
             >
               + Add Task
@@ -81,13 +42,6 @@ const Header = () => {
           </div>
         </div>
       </div>
-      <ModalComponent
-        open={open}
-        setOpen={setOpen}
-        formData={formData}
-        setFormData={setFormData}
-        onSubmit={handleAddSubmit}
-      />
     </div>
   );
 };

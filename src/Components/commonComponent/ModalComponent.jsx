@@ -5,7 +5,7 @@ const ModalComponent = ({
   open,
   setOpen,
   formData,
-  setFormData,
+  setFormData = null,
   onSubmit,
   title = "Add Task",
   des = " Create a card for your board.",

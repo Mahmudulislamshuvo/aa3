@@ -5,7 +5,7 @@ import { getFilteredData } from "../utils/displayData";
 import { getSortedData } from "../utils/sortedData";
 import ThreeDot from "./commonComponent/ThreeDot";
 
-const TodoColumn = ({ categoryColors }) => {
+const TodoColumn = ({ categoryColors, handleEdit }) => {
   const [showFilterMenu, setShowFilterMenu] = useState(false);
   const [openMenuId, setOpenMenuId] = useState(null);
   const [selectedFilter, setSelectedFilter] = useState(null);
@@ -47,15 +47,6 @@ const TodoColumn = ({ categoryColors }) => {
   // delete card
   const handleDelete = (id) => {
     setAlldata((prev) => prev.filter((item) => item.id !== id));
-    setOpenMenuId(null);
-  };
-
-  // edit card – এখানে তুই modal ওপেন করতে পারিস বা অন্য স্টেট সেট করতে পারিস
-  const handleEdit = (item) => {
-    // উদাহরণস্বরূপ:
-    // setEditingItem(item);
-    // setIsEditModalOpen(true);
-    console.log("Edit item: ", item);
     setOpenMenuId(null);
   };
 
@@ -105,13 +96,14 @@ const TodoColumn = ({ categoryColors }) => {
 
                 {openMenuId === items.id && (
                   <ThreeDot
+                    item={items}
                     onMoveToInProgress={() =>
                       handleMoveStatus(items.id, "in-progress")
                     }
                     onMoveToDone={() => handleMoveStatus(items.id, "done")}
-                    onEdit={() => handleEdit(items)}
                     onDelete={() => handleDelete(items.id)}
                     onClose={() => setOpenMenuId(null)}
+                    handleEdit={handleEdit}
                   />
                 )}
               </div>
