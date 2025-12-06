@@ -23,19 +23,18 @@ const ModalComponent = ({
   const handleSubmit = (e) => {
     e.preventDefault();
     onSubmit(formData);
-    setOpen(false);
+    setOpen(false); // This will call handleCloseModal from Contents.jsx
   };
 
   return (
     <>
-      <button onClick={() => setOpen(true)}>Open modal</button>
       <Modal
         classNames={{
           modal: "w-full max-w-4xl p-0 rounded-2xl",
           overlay: "bg-black/40",
         }}
         open={open}
-        onClose={() => setOpen(false)}
+        onClose={() => setOpen(false)} // This will call handleCloseModal from Contents.jsx
         center
       >
         <div className="max-w-4xl mx-auto px-4 py-10 sm:py-12">
@@ -71,7 +70,7 @@ const ModalComponent = ({
               <div className="grid grid-cols-1 gap-6">
                 <div>
                   <label
-                    for="title"
+                    htmlFor="title"
                     className="block text-sm font-medium text-gray-700"
                   >
                     Task Title
@@ -90,7 +89,7 @@ const ModalComponent = ({
 
                 <div>
                   <label
-                    for="description"
+                    htmlFor="description"
                     className="block text-sm font-medium text-gray-700"
                   >
                     Task Subtitle / Description
@@ -109,7 +108,7 @@ const ModalComponent = ({
               <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
                 <div>
                   <label
-                    for="category"
+                    htmlFor="category"
                     className="block text-sm font-medium text-gray-700"
                   >
                     Tag
@@ -134,7 +133,7 @@ const ModalComponent = ({
 
                 <div>
                   <label
-                    for="date"
+                    htmlFor="date"
                     className="block text-sm font-medium text-gray-700"
                   >
                     Due Date
@@ -151,7 +150,7 @@ const ModalComponent = ({
 
                 <div>
                   <label
-                    for="status"
+                    htmlFor="status"
                     className="block text-sm font-medium text-gray-700"
                   >
                     Status
@@ -171,12 +170,13 @@ const ModalComponent = ({
               </div>
 
               <div className="flex flex-col gap-3 sm:flex-row sm:justify-end">
-                <a
-                  href="./index.html"
+                <button
+                  type="button"
+                  onClick={() => setOpen(false)}
                   className="inline-flex items-center justify-center rounded-xl border border-gray-200 px-4 py-3 text-sm font-medium text-gray-700 hover:bg-gray-50"
                 >
                   Cancel
-                </a>
+                </button>
                 <button onClick={handleSubmit} type="submit">
                   {isEditMode ? "Update Task" : "Add Task"}
                 </button>

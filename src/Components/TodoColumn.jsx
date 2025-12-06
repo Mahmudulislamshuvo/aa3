@@ -4,6 +4,7 @@ import { DataContext } from "../Context";
 import { getFilteredData } from "../utils/displayData";
 import { getSortedData } from "../utils/sortedData";
 import ThreeDot from "./commonComponent/ThreeDot";
+import EmptyCart from "./commonComponent/EmptyCart";
 
 const TodoColumn = ({ categoryColors, handleEdit }) => {
   const [showFilterMenu, setShowFilterMenu] = useState(false);
@@ -67,6 +68,7 @@ const TodoColumn = ({ categoryColors, handleEdit }) => {
 
         <div className="space-y-4 flex-1 overflow-visible lg:overflow-y-auto">
           {/* <!-- Card 1 --> */}
+          {finalSortedData.length === 0 && <EmptyCart />}
           {finalSortedData?.map((items) => (
             <div
               key={items.id}
