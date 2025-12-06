@@ -5,8 +5,6 @@ const data = [
     description: "Set up high-fidelity prototypes with conditional logic",
     category: "Design",
     date: "Aug 26",
-    priority: "High",
-    assignee: "Anna Taylor",
     status: "todo",
   },
   {
@@ -15,8 +13,6 @@ const data = [
     description: "Data entry cleanup and validation",
     category: "Operations",
     date: "Aug 27",
-    priority: "Medium",
-    assignee: "John Smith",
     status: "todo",
   },
   {
@@ -25,8 +21,6 @@ const data = [
     description: "Social media scheduling and posting",
     category: "Marketing",
     date: "Aug 28",
-    priority: "Low",
-    assignee: "Emily Clark",
     status: "todo",
   },
   {
@@ -35,8 +29,6 @@ const data = [
     description: "Graphic design edits and refinements",
     category: "Creative",
     date: "Aug 27",
-    priority: "High",
-    assignee: "Sarah Lee",
     status: "in-progress",
   },
   {
@@ -45,8 +37,6 @@ const data = [
     description: "Presentation slide design",
     category: "Development",
     date: "Aug 30",
-    priority: "Medium",
-    assignee: "David Miller",
     status: "in-progress",
   },
   {
@@ -55,8 +45,6 @@ const data = [
     description: "Integrate payment gateway APIs",
     category: "Backend",
     date: "Aug 29",
-    priority: "Medium",
-    assignee: "James Wilson",
     status: "in-progress",
   },
   {
@@ -65,8 +53,6 @@ const data = [
     description: "Install and configure development tools",
     category: "Setup",
     date: "Aug 23",
-    priority: "Low",
-    assignee: "Olivia Brown",
     status: "done",
   },
   {
@@ -75,8 +61,6 @@ const data = [
     description: "Database schema and optimization",
     category: "Infrastructure",
     date: "Aug 24",
-    priority: "High",
-    assignee: "Michael Chen",
     status: "done",
   },
   {
@@ -85,8 +69,6 @@ const data = [
     description: "Complete API documentation",
     category: "Documentation",
     date: "Aug 25",
-    priority: "Medium",
-    assignee: "Sophia Martinez",
     status: "done",
   },
 ];
@@ -96,9 +78,9 @@ const categoryColors = {
   Operations: "bg-green-50 text-green-700",
   Marketing: "bg-pink-50 text-pink-700",
   Creative: "bg-purple-50 text-purple-700",
-  Development: "bg-yellow-50 text-yellow-700",
+  Development: "bg-sky-50 text-sky-700",
   Backend: "bg-indigo-50 text-indigo-700",
-  Setup: "bg-gray-50 text-gray-700",
+  Setup: "bg-slate-50 text-slate-700",
   Infrastructure: "bg-teal-50 text-teal-700",
   Documentation: "bg-orange-50 text-orange-700",
 };
