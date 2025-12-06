@@ -7,12 +7,12 @@ import ThreeDot from "./commonComponent/ThreeDot";
 
 const TodoColumn = ({ categoryColors }) => {
   const [showFilterMenu, setShowFilterMenu] = useState(false);
-  const [selectedCardId, setSelectedCardId] = useState(null);
+  const [openMenuId, setOpenMenuId] = useState(null);
   const [selectedFilter, setSelectedFilter] = useState(null);
   const [sortOrder, setSortOrder] = useState(null);
 
   //got data from context
-  const { allData } = useContext(DataContext);
+  const { allData, setAlldata } = useContext(DataContext);
   // filtered todo data only
   const data = allData.filter((item) => item.status === "todo");
   // mapping unique category to show
@@ -25,11 +25,38 @@ const TodoColumn = ({ categoryColors }) => {
     e.stopPropagation();
     setShowFilterMenu(!showFilterMenu);
   };
-
+  // Sorted data
   const finalSortedData = getSortedData(displayData, sortOrder);
 
-  const handleModify = () => {
-    setSelectedCardId(null);
+  // Handle Toggle Modify Component
+  const handleMenuToggle = (e, id) => {
+    e.stopPropagation();
+    setOpenMenuId((prev) => (prev === id ? null : id));
+  };
+
+  // status change (Move to)
+  const handleMoveStatus = (id, newStatus) => {
+    setAlldata((prev) =>
+      prev.map((item) =>
+        item.id === id ? { ...item, status: newStatus } : item
+      )
+    );
+    setOpenMenuId(null);
+  };
+
+  // delete card
+  const handleDelete = (id) => {
+    setAlldata((prev) => prev.filter((item) => item.id !== id));
+    setOpenMenuId(null);
+  };
+
+  // edit card – এখানে তুই modal ওপেন করতে পারিস বা অন্য স্টেট সেট করতে পারিস
+  const handleEdit = (item) => {
+    // উদাহরণস্বরূপ:
+    // setEditingItem(item);
+    // setIsEditModalOpen(true);
+    console.log("Edit item: ", item);
+    setOpenMenuId(null);
   };
 
   return (
@@ -61,7 +88,7 @@ const TodoColumn = ({ categoryColors }) => {
                 data-card-menu-container
               >
                 <button
-                  onClick={() => setSelectedCardId(items.id)}
+                  onClick={(e) => handleMenuToggle(e, items.id)}
                   type="button"
                   className="p-1 rounded-full hover:bg-gray-100 hover:text-gray-700 focus:outline-none"
                   data-card-menu-toggle="wireframes-menu"
@@ -75,8 +102,17 @@ const TodoColumn = ({ categoryColors }) => {
                     <path d="M8 3a1.25 1.25 0 110-2.5A1.25 1.25 0 018 3zm0 6.25a1.25 1.25 0 110-2.5 1.25 1.25 0 010 2.5zm0 6.25a1.25 1.25 0 110-2.5 1.25 1.25 0 010 2.5z" />
                   </svg>
                 </button>
-                {selectedCardId === items.id && (
-                  <ThreeDot onHandleModify={handleModify} />
+
+                {openMenuId === items.id && (
+                  <ThreeDot
+                    onMoveToInProgress={() =>
+                      handleMoveStatus(items.id, "in-progress")
+                    }
+                    onMoveToDone={() => handleMoveStatus(items.id, "done")}
+                    onEdit={() => handleEdit(items)}
+                    onDelete={() => handleDelete(items.id)}
+                    onClose={() => setOpenMenuId(null)}
+                  />
                 )}
               </div>
               <div className="mb-3">

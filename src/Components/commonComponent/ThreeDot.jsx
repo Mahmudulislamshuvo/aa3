@@ -1,4 +1,4 @@
-const ThreeDot = ({ onHandleModify }) => {
+const ThreeDot = () => {
   return (
     <>
       <div
