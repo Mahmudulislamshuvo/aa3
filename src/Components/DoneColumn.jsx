@@ -100,8 +100,9 @@ const DoneColumn = ({ categoryColors, handleEdit }) => {
                       handleMoveStatus(items.id, "in-progress")
                     }
                     onDelete={() => handleDelete(items.id)}
-                    onClose={() => setOpenMenuId(null)}
-                    handleEdit={handleEdit}
+                    handleEdit={(item) =>
+                      handleEdit(item, () => setOpenMenuId(null))
+                    }
                   />
                 )}
               </div>

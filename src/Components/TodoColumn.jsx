@@ -102,8 +102,9 @@ const TodoColumn = ({ categoryColors, handleEdit }) => {
                     }
                     onMoveToDone={() => handleMoveStatus(items.id, "done")}
                     onDelete={() => handleDelete(items.id)}
-                    onClose={() => setOpenMenuId(null)}
-                    handleEdit={handleEdit}
+                    handleEdit={(item) =>
+                      handleEdit(item, () => setOpenMenuId(null))
+                    }
                   />
                 )}
               </div>

@@ -19,8 +19,10 @@ const Contents = () => {
     date: "",
     status: "todo",
   });
+  const [onModalCloseAction, setOnModalCloseAction] = useState(null);
+
   // handle Add Task
-  const handleAdd = () => {
+  const handleAdd = (onClose) => {
     setFormData({
       id: null,
       title: "",
@@ -30,11 +32,17 @@ const Contents = () => {
       status: "todo",
     });
     setOpen(true);
+    if (onClose) {
+      setOnModalCloseAction(() => onClose);
+    }
   };
   // Handle Edit Task
-  const handleEdit = (item) => {
+  const handleEdit = (item, onClose) => {
     setFormData(item);
     setOpen(true);
+    if (onClose) {
+      setOnModalCloseAction(() => onClose);
+    }
   };
   // Handle submiting form FRESH or OLD
   const handleSubmit = (newData) => {
@@ -46,6 +54,18 @@ const Contents = () => {
     } else {
       // Add new task
       setAlldata([...allData, { ...newData, id: crypto.randomUUID() }]);
+    }
+    if (onModalCloseAction) {
+      onModalCloseAction();
+      setOnModalCloseAction(null);
+    }
+  };
+
+  const handleCloseModal = () => {
+    setOpen(false);
+    if (onModalCloseAction) {
+      onModalCloseAction();
+      setOnModalCloseAction(null);
     }
   };
 
@@ -62,7 +82,7 @@ const Contents = () => {
       </main>
       <ModalComponent
         open={open}
-        setOpen={setOpen}
+        setOpen={handleCloseModal}
         formData={formData}
         setFormData={setFormData}
         onSubmit={handleSubmit}
