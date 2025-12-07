@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
 import ColumnToolbar from "./commonComponent/ColumnToolbar";
-import { DataContext } from "../Context";
+import { DataContext, SearchContext } from "../Context";
 import { getFilteredData } from "../utils/displayData";
 import { getSortedData } from "../utils/sortedData";
 import ThreeDot from "./commonComponent/ThreeDot";
@@ -14,8 +14,18 @@ const DoneColumn = ({ categoryColors, handleEdit }) => {
 
   //got data from context
   const { allData, setAlldata } = useContext(DataContext);
-  // filtered todo data only
-  const data = allData.filter((item) => item.status === "done");
+  const { searchTitle } = useContext(SearchContext);
+
+  // search string
+  const search = (searchTitle || "").trim().toLowerCase();
+
+  // filtered done data only
+  let data = allData.filter((item) => item.status === "done");
+
+  // title ভিত্তিক search
+  if (search) {
+    data = data.filter((item) => item.title.toLowerCase().includes(search));
+  }
   // mapping unique category to show
 
   // filtered data show or show whole data
