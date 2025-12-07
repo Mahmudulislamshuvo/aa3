@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { DataContext } from "../Context";
+import { DataContext, SearchContext } from "../Context";
 import Board from "./Board";
 import Header from "./Header";
 import { data } from "../data/data";
@@ -8,6 +8,7 @@ import ModalComponent from "./commonComponent/ModalComponent";
 const Contents = () => {
   // context data providor
   const [allData, setAlldata] = useState(data);
+  const [searchTitle, setSearchTitle] = useState("");
   // Modal show state
   const [open, setOpen] = useState(false);
   // Modal form data manege state
@@ -72,13 +73,15 @@ const Contents = () => {
   return (
     <>
       <main className="flex-1 flex flex-col min-h-0">
-        <DataContext.Provider value={{ allData, setAlldata }}>
-          {/* <!-- Header --> */}
-          <Header handleAdd={handleAdd} />
+        <SearchContext.Provider value={{ searchTitle, setSearchTitle }}>
+          <DataContext.Provider value={{ allData, setAlldata }}>
+            {/* <!-- Header --> */}
+            <Header handleAdd={handleAdd} />
 
-          {/* <!-- Kanban Board --> */}
-          <Board handleEdit={handleEdit} />
-        </DataContext.Provider>
+            {/* <!-- Kanban Board --> */}
+            <Board handleEdit={handleEdit} />
+          </DataContext.Provider>
+        </SearchContext.Provider>
       </main>
       <ModalComponent
         open={open}

@@ -1,6 +1,25 @@
-import { useContext } from "react";
+import { useContext, useRef, useState } from "react";
+import { SearchContext } from "../Context";
 
 const Header = ({ handleAdd }) => {
+  const { searchTitle, setSearchTitle } = useContext(SearchContext);
+  const [localSearch, setLocalSearch] = useState(searchTitle || "");
+  const timeoutRef = useRef(null);
+
+  const handleSearchChange = (e) => {
+    const value = e.target.value;
+    setLocalSearch(value);
+
+    // debounce logic
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+    }
+
+    timeoutRef.current = setTimeout(() => {
+      setSearchTitle(value);
+    }, 400);
+  };
+
   return (
     <div>
       <div className="bg-white border-b border-gray-200 px-4 py-4 sm:px-6 sm:py-6 lg:px-8">
@@ -29,6 +48,8 @@ const Header = ({ handleAdd }) => {
               <input
                 type="search"
                 id="card-search"
+                value={localSearch}
+                onChange={handleSearchChange}
                 placeholder="Search tasks"
                 className="w-full rounded-xl border border-gray-200 bg-white pl-11 pr-4 py-2.5 text-sm text-gray-900 placeholder:text-gray-400 focus:border-gray-900 focus:outline-none"
               />
