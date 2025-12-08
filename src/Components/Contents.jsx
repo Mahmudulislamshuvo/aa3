@@ -56,6 +56,16 @@ const Contents = () => {
       // Add new task
       setAlldata([...allData, { ...newData, id: crypto.randomUUID() }]);
     }
+    // Close the modal and clear the form
+    handleCloseModal();
+    setFormData({
+      id: null,
+      title: "",
+      description: "",
+      category: "design",
+      date: "",
+      status: "todo",
+    });
     if (onModalCloseAction) {
       onModalCloseAction();
       setOnModalCloseAction(null);

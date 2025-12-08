@@ -23,7 +23,6 @@ const ModalComponent = ({
   const handleSubmit = (e) => {
     e.preventDefault();
     onSubmit(formData);
-    setOpen(false); // This will call handleCloseModal from Contents.jsx
   };
 
   return (
