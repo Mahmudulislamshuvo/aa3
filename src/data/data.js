@@ -83,6 +83,7 @@ const categoryColors = {
   Setup: "bg-slate-50 text-slate-700",
   Infrastructure: "bg-teal-50 text-teal-700",
   Documentation: "bg-orange-50 text-orange-700",
+  Documentationtwo: "bg-green-50 text-green-300",
 };
 
 export { data, categoryColors };
